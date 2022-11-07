@@ -1,52 +1,37 @@
-#include <stdio.h>
-#include <vector>
-#include <list>
+#include<stdio.h>
+#include<Windows.h>
+#include<time.h>
+#include<functional>
 
 int main()
 {
-	std::list<const char *> lst = {
-		"Tokyo","Yurakucho","Shimbashi","Hamamatsucho","Tamachi",
-		"Shinagawa","Osaki","Gotanda","Meguro","Ebisu",
-		"Shibuya","Harajuku","Yoyogi","Shinjuku","Shin-Okubo",
-		"Takadanobaba","Mejiro","Ikebukuro","Otsuka","Sugamo",
-		"Komagome","Tabata","Nippori","Uguisudani","Ueno",
-		"Okachimachi","Akihabara","Kanda"
+	//ユーザの答え
+	int answer;
+
+	printf("偶数だと思うなら0を入力、奇数だと思うなら1を入力してください\n");
+
+	scanf_s("%d", &answer);
+
+	printf("結果は.");
+
+
+	std::function<void()> lottery = [answer]()
+	{
+		// ランダム初期化
+		srand(time(NULL));
+		// 抽選
+		rand() % 2 == answer ? printf("正解!\n") : printf("不正解\n");
 	};
-	printf("1970年\n");
-	for (const char* i : lst)
-	{
-		printf("%s\n", i);
-	}
 
-	// 日暮里駅の前に西日暮里駅を追加
-	for (std::list<const char*>::iterator itr = lst.begin(); itr != lst.end(); ++itr)
+	std::function<void(int, std::function<void()>)> SetTimeout = [](int second, std::function<void()> func)
 	{
-		if (*itr == "Nippori")
-		{
-			itr = lst.insert(itr, "Nishi-Nippori");
-			++itr;
-		}
-	}
-	printf("\n2019年\n");
-	for (const char* j : lst)
-	{
-		printf("%s\n", j);
-	}
+		// 1000ミリ秒待機
+		Sleep(second * 1000);
+		// コールバック関数呼び出し
+		func();
+	};
 
-	// 品川駅の前に高輪ゲートウェイ駅を追加
-	for (std::list<const char*>::iterator itr = lst.begin(); itr != lst.end(); ++itr)
-	{
-		if (*itr == "Shinagawa")
-		{
-			itr = lst.insert(itr, "Takanawa-Gateway");
-			++itr;
-		}
-	}
-	printf("\n2022年\n");
-	for (const char* k : lst)
-	{
-		printf("%s\n", k);
-	}
+	SetTimeout(3, lottery);
 
 	return 0;
 }
