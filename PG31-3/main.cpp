@@ -1,37 +1,41 @@
-#include<stdio.h>
-#include<Windows.h>
-#include<time.h>
-#include<functional>
+#include <stdio.h>
+#include <windows.h>
+#include <time.h>
+
+typedef void (*PFunc)(int*);
+
+// コールバック関数
+void RandResult(int* answer)
+{
+	srand(time(NULL));
+
+	int randNum = rand() % 10;
+
+	if (randNum == *answer % 2)
+	{
+		printf("%dで不正解！", randNum); // 奇数の場合
+	}
+	else
+	{
+		printf("%dで正解！", randNum); // 偶数の場合
+	}
+}
+
+// コールバック関数を呼び出す
+void SetTimeout(PFunc p, int answer, int second)
+{
+	Sleep(second * 1000);
+	p(&answer);
+}
 
 int main()
 {
-	//ユーザの答え
 	int answer;
-
-	printf("偶数だと思うなら0を入力、奇数だと思うなら1を入力してください\n");
-
+	printf("正解を0か1で入力してください\n");
 	scanf_s("%d", &answer);
 
-	printf("結果は.");
-
-
-	std::function<void()> lottery = [answer]()
-	{
-		// ランダム初期化
-		srand(time(NULL));
-		// 抽選
-		rand() % 2 == answer ? printf("正解!\n") : printf("不正解\n");
-	};
-
-	std::function<void(int, std::function<void()>)> SetTimeout = [](int second, std::function<void()> func)
-	{
-		// 1000ミリ秒待機
-		Sleep(second * 1000);
-		// コールバック関数呼び出し
-		func();
-	};
-
-	SetTimeout(3, lottery);
+	PFunc p = RandResult;
+	SetTimeout(p, answer, 3);
 
 	return 0;
 }
