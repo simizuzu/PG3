@@ -1,52 +1,70 @@
 #include <stdio.h>
-#include <vector>
-#include <list>
+#include <stdlib.h>
+#include <string.h>
+
+// 単方向リストの構造体の定義
+typedef struct cell
+{
+	int val;
+	struct cell *next;
+}CELL;
+
+// プロトタイプ宣言
+void CreateAddList(CELL* headCell, int Num);
+void PrintList(CELL* headCell);
 
 int main()
 {
-	std::list<const char *> lst = {
-		"Tokyo","Yurakucho","Shimbashi","Hamamatsucho","Tamachi",
-		"Shinagawa","Osaki","Gotanda","Meguro","Ebisu",
-		"Shibuya","Harajuku","Yoyogi","Shinjuku","Shin-Okubo",
-		"Takadanobaba","Mejiro","Ikebukuro","Otsuka","Sugamo",
-		"Komagome","Tabata","Nippori","Uguisudani","Ueno",
-		"Okachimachi","Akihabara","Kanda"
-	};
-	printf("1970年\n");
-	for (const char* i : lst)
-	{
-		printf("%s\n", i);
-	}
+	int val;
+	// 先頭のセルを宣言
+	CELL head;
+	head.next = nullptr;
 
-	// 日暮里駅の前に西日暮里駅を追加
-	for (std::list<const char*>::iterator itr = lst.begin(); itr != lst.end(); ++itr)
+	while (true)
 	{
-		if (*itr == "Nippori")
-		{
-			itr = lst.insert(itr, "Nishi-Nippori");
-			++itr;
-		}
-	}
-	printf("\n2019年\n");
-	for (const char* j : lst)
-	{
-		printf("%s\n", j);
-	}
-
-	// 品川駅の前に高輪ゲートウェイ駅を追加
-	for (std::list<const char*>::iterator itr = lst.begin(); itr != lst.end(); ++itr)
-	{
-		if (*itr == "Shinagawa")
-		{
-			itr = lst.insert(itr, "Takanawa-Gateway");
-			++itr;
-		}
-	}
-	printf("\n2022年\n");
-	for (const char* k : lst)
-	{
-		printf("%s\n", k);
+		printf("入力してください : ");
+		scanf_s("%d", &val);
+		CreateAddList(&head, val);
+		PrintList(&head);
+		printf("\n");
 	}
 
 	return 0;
+}
+
+// 単方向リストを作る関数
+void CreateAddList(CELL* headCell, int Num)
+{
+	// 新規セルを作成
+	CELL* newCell;
+	newCell = (CELL*)malloc(sizeof(CELL));
+
+	// nullチェック
+	if (newCell)
+	{
+		newCell->val = '\0';
+		newCell->val = Num;
+		// 新規作成するセルのポインタ->値 = 値;
+		newCell->next = nullptr;
+	}
+
+	// 追加する前の最後尾を検索
+	while (headCell->next != nullptr)
+	{
+		headCell = headCell->next;
+	}
+
+	// 追加する前の最後尾に新規セルのポインタを代入
+	headCell->next = newCell;
+}
+
+// 単方向リストを表示する関数
+void PrintList(CELL* headCell)
+{
+	// nextに何か値が入っている限り出力
+	while (headCell->next != nullptr)
+	{
+		headCell = headCell->next;
+		printf("結果を出力 : %d\n", headCell->val);
+	}
 }
