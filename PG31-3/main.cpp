@@ -5,28 +5,39 @@
 // 単方向リストの構造体の定義
 typedef struct cell
 {
-	char str[8];
+	int val;
+	struct cell* prev;
 	struct cell* next;
 }CELL;
 
 // プロトタイプ宣言
-void CreateAddList(CELL* headCell, const char* buf);
-void PrintList(CELL* headCell);
+void CreateAddList(CELL* currentCell, int val);
+void PrintList(CELL* endCell);
+CELL* GetInsertListAddress(CELL* endCell,int iterator);
 
 int main()
 {
-	char str[8];
 	int val;
+	int iterator;
+	int inputValue;
+	CELL* insertCell;
+
 	// 先頭のセルを宣言
 	CELL head;
 	head.next = nullptr;
+	head.prev = nullptr;
 
 	while (true)
 	{
-		printf("好きな数字を入力してください\n");
-		printf("入力する値: ");
-		scanf_s("%s", str, 8);
-		CreateAddList(&head, str);
+		printf("何番目のセルの後ろに挿入しますか？？\n");
+		scanf_s("%d", &iterator);
+
+		printf("挿入する値を入力してください\n");
+		scanf_s("%d",&inputValue);
+
+		insertCell = GetInsertListAddress(&head,iterator);
+		CreateAddList(insertCell, inputValue);
+
 		PrintList(&head);
 		printf("\n");
 	}
@@ -34,37 +45,61 @@ int main()
 	return 0;
 }
 
+CELL* GetInsertListAddress(CELL* endCell, int iterator)
+{
+	for (int i = 0; i < iterator; i++)
+	{
+		if (endCell->next)
+		{
+			endCell = endCell->next;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	return endCell;
+}
+
+
 // 単方向リストを作る関数
-void CreateAddList(CELL* headCell, const char* buf)
+void CreateAddList(CELL* currentCell, int val)
 {
 	// 新規セルを作成
 	CELL* newCell;
 	newCell = (CELL*)malloc(sizeof(CELL));
-
 	if (newCell != nullptr)
 	{
-		strcpy_s(newCell->str, 8, buf);
-		// 新規作成するセルのポインタ->値 = 値;
-		newCell->next = nullptr;
+		newCell->val = val;
+		newCell->prev = currentCell;
+		newCell->next = currentCell->next;
 	}
 
-	// 追加する前の最後尾を検索
-	while (headCell->next != nullptr)
+
+	if (currentCell->next)
 	{
-		headCell = headCell->next;
+		CELL* nextCell = currentCell->next;
+		nextCell->prev = newCell;
 	}
-
+	
 	// 追加する前の最後尾に新規セルのポインタを代入
-	headCell->next = newCell;
+	currentCell->next = newCell;
 }
 
 // 単方向リストを表示する関数
-void PrintList(CELL* headCell)
+void PrintList(CELL* endCell)
 {
+	int no = 1;
 	// nextに何か値が入っている限り出力
-	while (headCell->next != nullptr)
+	while (endCell->next != nullptr)
 	{
-		headCell = headCell->next;
-		printf("\n入力された値一覧: %s\n", headCell->str);
+		endCell = endCell->next;
+		printf("%d番目", no);
+		//printf("%p", endCell->prev);
+		printf("%5d\n", endCell->val);
+		//printf("(%p)", endCell);
+		//printf("%p\n", endCell->next);
+		no++;
 	}
 }
