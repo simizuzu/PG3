@@ -5,16 +5,17 @@
 // 単方向リストの構造体の定義
 typedef struct cell
 {
-	int val;
-	struct cell *next;
+	char str[8];
+	struct cell* next;
 }CELL;
 
 // プロトタイプ宣言
-void CreateAddList(CELL* headCell, int Num);
+void CreateAddList(CELL* headCell, const char* buf);
 void PrintList(CELL* headCell);
 
 int main()
 {
+	char str[8];
 	int val;
 	// 先頭のセルを宣言
 	CELL head;
@@ -22,9 +23,10 @@ int main()
 
 	while (true)
 	{
-		printf("入力してください : ");
-		scanf_s("%d", &val);
-		CreateAddList(&head, val);
+		printf("好きな数字を入力してください\n");
+		printf("入力する値: ");
+		scanf_s("%s", str, 8);
+		CreateAddList(&head, str);
 		PrintList(&head);
 		printf("\n");
 	}
@@ -33,17 +35,15 @@ int main()
 }
 
 // 単方向リストを作る関数
-void CreateAddList(CELL* headCell, int Num)
+void CreateAddList(CELL* headCell, const char* buf)
 {
 	// 新規セルを作成
 	CELL* newCell;
 	newCell = (CELL*)malloc(sizeof(CELL));
 
-	// nullチェック
-	if (newCell)
+	if (newCell != nullptr)
 	{
-		newCell->val = '\0';
-		newCell->val = Num;
+		strcpy_s(newCell->str, 8, buf);
 		// 新規作成するセルのポインタ->値 = 値;
 		newCell->next = nullptr;
 	}
@@ -65,6 +65,6 @@ void PrintList(CELL* headCell)
 	while (headCell->next != nullptr)
 	{
 		headCell = headCell->next;
-		printf("結果を出力 : %d\n", headCell->val);
+		printf("\n入力された値一覧: %s\n", headCell->str);
 	}
 }
