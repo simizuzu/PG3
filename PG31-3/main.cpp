@@ -17,7 +17,6 @@ CELL* GetInsertListAddress(CELL* endCell,int iterator);
 
 int main()
 {
-	int val;
 	int iterator;
 	int inputValue;
 	CELL* insertCell;
