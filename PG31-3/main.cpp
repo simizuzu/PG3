@@ -7,13 +7,13 @@ template<typename T>
 void Display(Mylist<T>& list, int& operationNum, int& displayOperationNum);
 
 template<typename T>
-void Insert(Mylist<T>& list, int& operationNum);
+void InsertElement(Mylist<T>& list, int& operationNum);
 
 template<typename T>
-void Edit(Mylist<T>& list, int& operationNum);
+void EditElement(Mylist<T>& list, int& operationNum);
 
 template<typename T>
-void Delete(Mylist<T>& list, int& operationNum);
+void DeleteElement(Mylist<T>& list, int& operationNum);
 
 template<typename T>
 void ChangeElement(Mylist<T>& list, int& operationNum);
@@ -34,7 +34,7 @@ int main()
 
 	while (true)
 	{
-		// —v‘f‚Ì‘€ì
+		// —v‘f‚Ì‘€ì(‰Šú‰æ–Ê)
 		std::cout << "[—v‘f‚Ì‘€ì]" << std::endl;
 		std::cout << "1.—v‘f‚Ì•\¦" << std::endl;
 		std::cout << "2.—v‘f‚Ì‘}“ü" << std::endl;
@@ -66,15 +66,15 @@ int main()
 			break;
 
 		case 2:// ÅŒã”ö‚É—v‘f‚ğ’Ç‰Á
-			Insert(list, operationNum);
+			InsertElement(list, operationNum);
 			break;
 
 		case 3:// ”CˆÓ‚ÌêŠ‚Ì’l‚ğ•ÏX
-			Edit(list, operationNum);
+			EditElement(list, operationNum);
 			break;
 
 		case 4:// ”CˆÓ‚ÌêŠ‚Ìíœ
-			Delete(list, operationNum);
+			DeleteElement(list, operationNum);
 			break;
 
 		case 5:// ”CˆÓ‚ÌêŠ‚Æ”CˆÓ‚ÌêŠ‚ğ“ü‚ê‘Ö‚¦
@@ -86,6 +86,7 @@ int main()
 	return 0;
 }
 
+// 1”Ô–Ú‚Ì‰æ–Ê
 template<typename T>
 void Display(Mylist<T>& list, int& operationNum, int& displayOpeNum)
 {
@@ -157,8 +158,9 @@ void Display(Mylist<T>& list, int& operationNum, int& displayOpeNum)
 	}
 }
 
+// 2”Ô–Ú‚Ì‰æ–Ê
 template<typename T>
-void Insert(Mylist<T>& list, int& operationNum)
+void InsertElement(Mylist<T>& list, int& operationNum)
 {
 	std::cout << "[ƒŠƒXƒg—v‘f‚Ì‘}“ü]" << std::endl;
 	std::cout << std::endl;
@@ -213,8 +215,9 @@ void Insert(Mylist<T>& list, int& operationNum)
 	}
 }
 
+// 3”Ô–Ú‚Ì‰æ–Ê
 template<typename T>
-void Edit(Mylist<T>& list, int& operationNum)
+void EditElement(Mylist<T>& list, int& operationNum)
 {
 	std::cout << "[—v‘f‚Ì•ÒW]" << std::endl;
 	std::cout << std::endl;
@@ -260,8 +263,9 @@ void Edit(Mylist<T>& list, int& operationNum)
 	}
 }
 
+// 4”Ô–Ú‚Ì‰æ–Ê
 template<typename T>
-void Delete(Mylist<T>& list, int& operationNum)
+void DeleteElement(Mylist<T>& list, int& operationNum)
 {
 	std::cout << "[—v‘f‚Ìíœ]" << std::endl;
 	std::cout << std::endl;
@@ -303,6 +307,7 @@ void Delete(Mylist<T>& list, int& operationNum)
 	}
 }
 
+// 5”Ô–Ú‚Ì‰æ–Ê
 template<typename T>
 void ChangeElement(Mylist<T>& list, int& operationNum)
 {
