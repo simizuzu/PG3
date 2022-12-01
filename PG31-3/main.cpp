@@ -2,6 +2,7 @@
 #include"MyList.h"
 #include<string>
 
+// 関数オーバーロード
 template<typename T>
 void Display(Mylist<T>& list, int& operationNum, int& displayOperationNum);
 
@@ -15,25 +16,25 @@ template<typename T>
 void Delete(Mylist<T>& list, int& operationNum);
 
 template<typename T>
-void Change(Mylist<T>& list, int& operationNum);
+void ChangeElement(Mylist<T>& list, int& operationNum);
 
 int main()
 {
 	Mylist<std::string> list;
 
+	// 要素一覧
 	list.PushBack("banana");
 	list.PushBack("apple");
 	list.PushBack("orange");
 
-	//要素の操作の操作番号
+	// 要素の操作の操作番号
 	int operationNum = 0;
-
-	//要素の表示の操作番号
-	int displayOperationNum = 0;
-
+	// 要素の表示の操作番号
+	int displayOpeNum = 0;
 
 	while (true)
 	{
+		// 要素の操作
 		std::cout << "[要素の操作]" << std::endl;
 		std::cout << "1.要素の表示" << std::endl;
 		std::cout << "2.要素の挿入" << std::endl;
@@ -53,29 +54,31 @@ int main()
 
 		if (operationNum == 0)
 		{
-			//操作番号を取得
+			// 操作番号を取得
 			std::cin >> operationNum;
 		}
 		system("cls");
 
 		switch (operationNum)
 		{
-		case 1://要素の表示
-			Display(list, operationNum, displayOperationNum);
+		case 1:// 要素の表示
+			Display(list, operationNum, displayOpeNum);
 			break;
 
-		case 2://最後尾に要素を追加
+		case 2:// 最後尾に要素を追加
 			Insert(list, operationNum);
 			break;
 
-		case 3://任意の場所の値を変更
+		case 3:// 任意の場所の値を変更
 			Edit(list, operationNum);
 			break;
-		case 4://任意の場所の削除
+
+		case 4:// 任意の場所の削除
 			Delete(list, operationNum);
 			break;
-		case 5://任意の場所と任意の場所を入れ替え
-			Change(list, operationNum);
+
+		case 5:// 任意の場所と任意の場所を入れ替え
+			ChangeElement(list, operationNum);
 			break;
 		}
 	}
@@ -84,7 +87,7 @@ int main()
 }
 
 template<typename T>
-void Display(Mylist<T>& list, int& operationNum, int& displayOperationNum)
+void Display(Mylist<T>& list, int& operationNum, int& displayOpeNum)
 {
 	std::cout << "[要素の表示]" << std::endl;
 	std::cout << "1.要素の一覧表示" << std::endl;
@@ -93,16 +96,16 @@ void Display(Mylist<T>& list, int& operationNum, int& displayOperationNum)
 	std::cout << std::endl;
 	std::cout << "操作を選択してください" << std::endl;
 
-	//操作番号を取得
-	std::cin >> displayOperationNum;
+	// 操作番号を取得
+	std::cin >> displayOpeNum;
 	system("cls");
 
-	switch (displayOperationNum)
+	switch (displayOpeNum)
 	{
 	case 1:
 		std::cout << "[要素の一覧表示]" << std::endl;
 
-		//一覧表示
+		// 一覧表示
 		list.ListDisplay();
 
 		std::cout << "要素数:" << list.Size() << std::endl;
@@ -112,14 +115,13 @@ void Display(Mylist<T>& list, int& operationNum, int& displayOperationNum)
 		std::cout << "[順番を指定して要素を表示]" << std::endl;
 		std::cout << "表示したい要素の順番を指定してください。" << std::endl;
 
-		//指定する番号を取得
+		// 指定する番号を取得
 		int specifyNum;
 		std::cin >> specifyNum;
 		std::cout << std::endl;
 
-		//指定して表示
+		// 指定して表示
 		list.SpecifyElement(specifyNum);
-
 		break;
 
 	case 9:
@@ -127,26 +129,28 @@ void Display(Mylist<T>& list, int& operationNum, int& displayOperationNum)
 		break;
 	}
 
-	//要素操作に戻らなかったら
-	if (displayOperationNum == 1 || displayOperationNum == 2)
+	// 要素操作に戻らなかったら
+	if (displayOpeNum == 1 || displayOpeNum == 2)
 	{
 		std::cout << std::endl;
 		std::cout << "----------------------------------" << std::endl;
 		std::cout << "1.要素の表示に戻る" << std::endl;
 		std::cout << "2.要素の操作に戻る" << std::endl;
 
-		//操作番号を取得
-		std::cin >> displayOperationNum;
-
+		// 操作番号を取得
+		std::cin >> displayOpeNum;
 		system("cls");
-		switch (displayOperationNum)
+
+		switch (displayOpeNum)
 		{
 		case 1:
 			operationNum = 1;
 			break;
+
 		case 2:
 			operationNum = 0;
 			break;
+
 		default:
 			break;
 		}
@@ -199,10 +203,12 @@ void Insert(Mylist<T>& list, int& operationNum)
 
 	if (operationNum == 9)
 	{
+		// 9を押したとき初期画面に戻る
 		operationNum = 0;
 	}
 	else
 	{
+		// 9以外を押したとき[リスト要素の編集]の最初の画面に戻る
 		operationNum = 2;
 	}
 }
@@ -218,7 +224,7 @@ void Edit(Mylist<T>& list, int& operationNum)
 	std::cin >> elementNum;
 	std::cout << std::endl;
 
-	if (list.Search(elementNum))
+	if (list.SearchElement(elementNum))
 	{
 		std::cout << elementNum << "番目の要素の変更する値を入力してください。" << std::endl;
 
@@ -235,7 +241,6 @@ void Edit(Mylist<T>& list, int& operationNum)
 		std::cout << elementNum << "番目の要素のが見つかりませんでした。" << std::endl;
 	}
 
-
 	std::cout << std::endl;
 	std::cout << "----------------------------------" << std::endl;
 	std::cout << "9.要素操作に戻る" << std::endl;
@@ -245,13 +250,14 @@ void Edit(Mylist<T>& list, int& operationNum)
 
 	if (operationNum == 9)
 	{
+		// 9を押したとき初期画面に戻る
 		operationNum = 0;
 	}
 	else
 	{
+		// 9以外を押したとき[要素の編集]の最初の画面に戻る
 		operationNum = 3;
 	}
-
 }
 
 template<typename T>
@@ -265,7 +271,7 @@ void Delete(Mylist<T>& list, int& operationNum)
 	std::cin >> elementNum;
 	std::cout << std::endl;
 
-	if (list.Search(elementNum))
+	if (list.SearchElement(elementNum))
 	{
 		std::cout << elementNum << "番目の要素" << '"' << list.GetElement(elementNum) << '"' << "削除しました" << std::endl;
 
@@ -275,7 +281,7 @@ void Delete(Mylist<T>& list, int& operationNum)
 	}
 	else
 	{
-		std::cout << elementNum << "番目の要素のが見つかりませんでした。" << std::endl;
+		std::cout << elementNum << "番目の要素が見つかりませんでした。" << std::endl;
 	}
 
 	std::cout << std::endl;
@@ -287,16 +293,18 @@ void Delete(Mylist<T>& list, int& operationNum)
 
 	if (operationNum == 9)
 	{
+		// 9を押したとき初期画面に戻る
 		operationNum = 0;
 	}
 	else
 	{
+		// 9以外を押したとき[要素の削除]の最初の画面に戻る
 		operationNum = 4;
 	}
 }
 
 template<typename T>
-void Change(Mylist<T>& list, int& operationNum)
+void ChangeElement(Mylist<T>& list, int& operationNum)
 {
 	std::cout << "[要素の並び替え]" << std::endl;
 	std::cout << std::endl;
@@ -304,24 +312,24 @@ void Change(Mylist<T>& list, int& operationNum)
 	std::cout << "1.昇順で並び替える" << std::endl;
 	std::cout << "2.降順で並び替える" << std::endl;
 
-	int changeOperationNum;
+	int changeSortNum;
 
-	std::cin >> changeOperationNum;
+	std::cin >> changeSortNum;
 
-	switch (changeOperationNum)
+	switch (changeSortNum)
 	{
 	case 1:
 	{
-
-		list.Sort();
+		list.SortElement();
 		std::cout << "リストの要素を昇順で並び替えました" << std::endl;
 	}
 	break;
-	case 2:
-		list.Sort(false);
-		std::cout << "リストの要素を降順で並び替えました" << std::endl;
 
+	case 2:
+		list.SortElement(false);
+		std::cout << "リストの要素を降順で並び替えました" << std::endl;
 		break;
+
 	default:
 		break;
 	}
@@ -335,10 +343,12 @@ void Change(Mylist<T>& list, int& operationNum)
 
 	if (operationNum == 9)
 	{
+		// 9を押したとき初期画面に戻る
 		operationNum = 0;
 	}
 	else
 	{
+		// 9以外を押したとき[要素並び替え]の最初の画面に戻る
 		operationNum = 5;
 	}
 }
