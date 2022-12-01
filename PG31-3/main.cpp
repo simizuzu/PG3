@@ -2,9 +2,8 @@
 #include"MyList.h"
 #include<string>
 
-// 関数オーバーロード
 template<typename T>
-void Display(Mylist<T>& list, int& operationNum, int& displayOperationNum);
+void DisplayElement(Mylist<T>& list, int& operationNum, int& displayOperationNum);
 
 template<typename T>
 void InsertElement(Mylist<T>& list, int& operationNum);
@@ -38,13 +37,11 @@ int main()
 		std::cout << "[要素の操作]" << std::endl;
 		std::cout << "1.要素の表示" << std::endl;
 		std::cout << "2.要素の挿入" << std::endl;
-
 		if (list.Size() > 0)
 		{
 			std::cout << "3.要素の編集" << std::endl;
 			std::cout << "4.要素の削除" << std::endl;
 		}
-
 		std::cout << "5.要素の並び替え(オプション)" << std::endl;
 		std::cout << std::endl;
 		std::cout << "----------------------------------" << std::endl;
@@ -61,23 +58,23 @@ int main()
 
 		switch (operationNum)
 		{
-		case 1:// 要素の表示
-			Display(list, operationNum, displayOpeNum);
+		case 1:// 1番:要素の表示
+			DisplayElement(list, operationNum, displayOpeNum);
 			break;
 
-		case 2:// 最後尾に要素を追加
+		case 2:// 2番:最後尾に要素を追加
 			InsertElement(list, operationNum);
 			break;
 
-		case 3:// 任意の場所の値を変更
+		case 3:// 3番:任意の場所の値を変更
 			EditElement(list, operationNum);
 			break;
 
-		case 4:// 任意の場所の削除
+		case 4:// 4番:任意の場所の削除
 			DeleteElement(list, operationNum);
 			break;
 
-		case 5:// 任意の場所と任意の場所を入れ替え
+		case 5:// 5番:任意の場所と任意の場所を入れ替え
 			ChangeElement(list, operationNum);
 			break;
 		}
@@ -86,9 +83,10 @@ int main()
 	return 0;
 }
 
+#pragma region それぞれの操作画面
 // 1番目の画面
 template<typename T>
-void Display(Mylist<T>& list, int& operationNum, int& displayOpeNum)
+void DisplayElement(Mylist<T>& list, int& operationNum, int& displayOpeNum)
 {
 	std::cout << "[要素の表示]" << std::endl;
 	std::cout << "1.要素の一覧表示" << std::endl;
@@ -145,10 +143,12 @@ void Display(Mylist<T>& list, int& operationNum, int& displayOpeNum)
 		switch (displayOpeNum)
 		{
 		case 1:
+			// [要素表示]に戻る
 			operationNum = 1;
 			break;
 
 		case 2:
+			// 初期画面に戻る
 			operationNum = 0;
 			break;
 
@@ -205,12 +205,12 @@ void InsertElement(Mylist<T>& list, int& operationNum)
 
 	if (operationNum == 9)
 	{
-		// 9を押したとき初期画面に戻る
+		// 初期画面に戻る
 		operationNum = 0;
 	}
 	else
 	{
-		// 9以外を押したとき[リスト要素の編集]の最初の画面に戻る
+		// [リスト要素の編集]に戻る
 		operationNum = 2;
 	}
 }
@@ -253,12 +253,12 @@ void EditElement(Mylist<T>& list, int& operationNum)
 
 	if (operationNum == 9)
 	{
-		// 9を押したとき初期画面に戻る
+		// 初期画面に戻る
 		operationNum = 0;
 	}
 	else
 	{
-		// 9以外を押したとき[要素の編集]の最初の画面に戻る
+		// [要素の編集]に戻る
 		operationNum = 3;
 	}
 }
@@ -297,12 +297,12 @@ void DeleteElement(Mylist<T>& list, int& operationNum)
 
 	if (operationNum == 9)
 	{
-		// 9を押したとき初期画面に戻る
+		// 初期画面に戻る
 		operationNum = 0;
 	}
 	else
 	{
-		// 9以外を押したとき[要素の削除]の最初の画面に戻る
+		// [要素の削除]に戻る
 		operationNum = 4;
 	}
 }
@@ -348,12 +348,13 @@ void ChangeElement(Mylist<T>& list, int& operationNum)
 
 	if (operationNum == 9)
 	{
-		// 9を押したとき初期画面に戻る
+		// 初期画面に戻る
 		operationNum = 0;
 	}
 	else
 	{
-		// 9以外を押したとき[要素並び替え]の最初の画面に戻る
+		// [要素並び替え]に戻る
 		operationNum = 5;
 	}
 }
+#pragma endregion
