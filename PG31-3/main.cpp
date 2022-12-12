@@ -1,10 +1,6 @@
 #include "DxLib.h"
 #include "SceneManager.h"
 
-
-// ウィンドウのタイトルに表示する文字列
-//const char TITLE[];
-
 // ウィンドウ横幅
 const int WIN_WIDTH = 600;
 
@@ -23,9 +19,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// ウィンドウサイズを手動では変更させず、
 	// かつウィンドウサイズに合わせて拡大できないようにする
 	SetWindowSizeChangeEnableFlag(FALSE, FALSE);
-
-	// タイトルを変更
-	//SetMainWindowText(TITLE);
 
 	// 画面サイズの最大サイズ、カラービット数を設定(モニターの解像度に合わせる)
 	SetGraphMode(WIN_WIDTH, WIN_HEIGHT, 32);
