@@ -1,5 +1,5 @@
 #pragma once
-class SceneManager
+class SceneManager final
 {
 public:
 	/// <summary>
@@ -7,11 +7,6 @@ public:
 	/// </summary>
 	/// <param name="sceneNo">次のシーン番号</param>
 	void ChangeScene(int& sceneNo);
-
-	/// <summary>
-	/// deleteを実行
-	/// </summary>
-	void Delete();
 
 	// シングルトン
 	static SceneManager* GetInstance();
