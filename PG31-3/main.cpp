@@ -1,41 +1,51 @@
 #include <stdio.h>
-#include <windows.h>
-#include <time.h>
+#include <stdlib.h>
+#include <memory>
+#include <vector>
 
-typedef void (*PFunc)(int*);
-
-// コールバック関数
-void RandResult(int* answer)
-{
-	srand(time(NULL));
-
-	int randNum = rand() % 10;
-
-	if (randNum == *answer % 2)
-	{
-		printf("%dで不正解！", randNum); // 奇数の場合
-	}
-	else
-	{
-		printf("%dで正解！", randNum); // 偶数の場合
-	}
-}
-
-// コールバック関数を呼び出す
-void SetTimeout(PFunc p, int answer, int second)
-{
-	Sleep(second * 1000);
-	p(&answer);
-}
+#include "Enemy.h"
 
 int main()
 {
-	int answer;
-	printf("正解を0か1で入力してください\n");
-	scanf_s("%d", &answer);
+	std::vector<std::unique_ptr<Enemy>> enemys;
 
-	PFunc p = RandResult;
-	SetTimeout(p, answer, 3);
+	int enemyNum = 2;
+
+	printf("敵の数は%d体\n", enemyNum);
+	printf("\n");
+
+	// 敵の生成
+	for (int i = 0; i < enemyNum; i++)
+	{
+		std::unique_ptr<Enemy> enemy;
+		enemy = std::make_unique<Enemy>();
+		enemy->Initialize();
+
+		enemys.push_back(std::move(enemy));
+	}
+	
+	printf("\n");
+
+	// 敵の状態
+	for (std::unique_ptr<Enemy>& enemy : enemys)
+	{
+		enemy->Draw();
+	}
+
+	printf("\n");
+
+	// 敵を倒す
+	enemys[0]->Update();
+	printf("\n");
+
+	// 敵の状態
+	for (std::unique_ptr<Enemy>& enemy : enemys)
+	{
+		enemy->Draw();
+	}
+
+	enemys.clear();
+	system("pause");
 
 	return 0;
 }
