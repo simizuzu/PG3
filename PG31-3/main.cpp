@@ -1,10 +1,10 @@
-﻿#include <stdio.h>
-#include <stdlib.h>
-#include<memory>
-#include<vector>
+﻿#include <Windows.h>
+#include "stdio.h"
 
 int main()
 {
+	printf("クラス図とシーケンス図のみ書きました\n");
+	printf("\n");
 
 	system("pause");
 
